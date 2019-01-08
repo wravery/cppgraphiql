@@ -1,0 +1,33 @@
+{
+  "name": "cppgraphiql",
+  "version": "0.1.0",
+  "repository": "github:wravery/cppgraphiql",
+  "private": true,
+  "main": "./src/startElectron.js",
+  "homepage": "./",
+  "dependencies": {
+    "electron": "^3.0.8",
+    "electron-cppgraphql": "file:../electron-cppgraphql",
+    "graphiql": "^0.12.0",
+    "graphql": "^0.12.0",
+    "react": "^16.7.0",
+    "react-dom": "^16.7.0",
+    "react-scripts": "2.1.3"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject",
+    "electron": "electron ."
+  },
+  "eslintConfig": {
+    "extends": "react-app"
+  },
+  "browserslist": [
+    ">0.2%",
+    "not dead",
+    "not ie <= 11",
+    "not op_mini all"
+  ]
+}
