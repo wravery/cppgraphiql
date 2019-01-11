@@ -9,7 +9,7 @@
     "electron": "^3.0.8",
     "electron-cppgraphql": "file:../electron-cppgraphql",
     "graphiql": "^0.12.0",
-    "graphql": "^0.12.0",
+    "graphql": "^0.13.0",
     "react": "^16.7.0",
     "react-dom": "^16.7.0",
     "react-scripts": "2.1.3"

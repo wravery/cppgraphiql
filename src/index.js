@@ -7,7 +7,7 @@ import * as serviceWorker from './serviceWorker';
 
 
 const electron = window.require('electron');
-const cppgraphql = electron.remote.require('electron-cppgraphql/build/Release/electron-cppgraphql.node');
+const cppgraphql = electron.remote.require('electron-cppgraphql/build/Debug/electron-cppgraphql.node');
 
 cppgraphql.startService();
 
@@ -41,4 +41,4 @@ ReactDOM.render(<GraphiQL fetcher={fetchQuery} />, document.getElementById('root
 // If you want your app to work offline and load faster, you can change
 // unregister() to register() below. Note this comes with some pitfalls.
 // Learn more about service workers: http://bit.ly/CRA-PWA
-serviceWorker.unregister();
+serviceWorker.register();
