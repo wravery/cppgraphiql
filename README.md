@@ -3,7 +3,7 @@
 This is a sample Electron app hosting GraphiQL for a cppgraphqlgen service.<br>
 It was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
-This package assumes that you've cloned [electron-cppgraphql](https://github.com/wravery/electron-cppgraphql) into a parallel directory and successfully built it with `npm install`.
+This package assumes that you've successfully built [electron-cppgraphql](https://github.com/wravery/electron-cppgraphql) with `npm install`.
 
 To start running the app, use:
 * `npm install`
