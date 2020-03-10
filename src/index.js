@@ -3,13 +3,8 @@ import 'graphiql/graphiql.css';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
-import * as serviceWorker from './serviceWorker';
 
-
-const electron = window.require('electron');
-const cppgraphql = electron.remote.require('electron-cppgraphql/build/Debug/electron-cppgraphql.node');
-
-cppgraphql.startService();
+window.cppgraphql.startService();
 
 function fetchQuery (params) {
   const query = params.query;
@@ -21,11 +16,16 @@ function fetchQuery (params) {
   const operationName = params.operationName || "";
   const variables = params.variables ? JSON.stringify(params.variables) : "";
 
+  console.log(`Query: ${query}`);
+  console.log(`Operation: ${operationName}`);
+  console.log(`Variables: ${variables}`);
+
   return new Promise((resolve, reject) => {
-      cppgraphql.fetchQuery(query, operationName, variables, (error, response) => {
+    window.cppgraphql.fetchQuery(query, operationName, variables, (error, response) => {
         if (error) {
           reject(error);
         } else {
+          console.log(`Response: ${response}`);
           try {
             resolve(JSON.parse(response));
           } catch (error) {
@@ -37,8 +37,3 @@ function fetchQuery (params) {
 }
 
 ReactDOM.render(<GraphiQL fetcher={fetchQuery} />, document.getElementById('root'));
-
-// If you want your app to work offline and load faster, you can change
-// unregister() to register() below. Note this comes with some pitfalls.
-// Learn more about service workers: http://bit.ly/CRA-PWA
-serviceWorker.register();
