@@ -38,6 +38,10 @@ app.on('ready', createWindow);
 
 // Quit when all windows are closed.
 app.on('window-all-closed', function () {
+  const cppgraphql = require('electron-cppgraphql/build/Debug/electron-cppgraphql.node');
+
+  cppgraphql.stopService();
+
   // On macOS it is common for applications and their menu bar
   // to stay active until the user quits explicitly with Cmd + Q
   if (process.platform !== 'darwin') {
