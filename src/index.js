@@ -20,20 +20,8 @@ function fetchQuery (params) {
   console.log(`Operation: ${operationName}`);
   console.log(`Variables: ${variables}`);
 
-  return new Promise((resolve, reject) => {
-    window.cppgraphql.fetchQuery(query, operationName, variables, (error, response) => {
-        if (error) {
-          reject(error);
-        } else {
-          console.log(`Response: ${response}`);
-          try {
-            resolve(JSON.parse(response));
-          } catch (error) {
-            resolve(response);
-          }
-        }
-      });
-  });
+  return window.cppgraphql.fetchQuery(query, operationName, variables)
+    .then(response => JSON.parse(response));
 }
 
 ReactDOM.render(<GraphiQL fetcher={fetchQuery} />, document.getElementById('root'));
