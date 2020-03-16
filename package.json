@@ -33,6 +33,7 @@
   "devDependencies": {
     "concurrently": "^5.1.0",
     "electron": "^8.1.0",
+    "minimist": "^1.2.5",
     "wait-on": "^4.0.1"
   }
 }
