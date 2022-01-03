@@ -1,12 +1,15 @@
-import GraphiQL from 'graphiql';
-import 'graphiql/graphiql.css';
-import React from 'react';
-import ReactDOM from 'react-dom';
-import './index.css';
+import GraphiQL from "graphiql";
+import "graphiql/graphiql.css";
+import React from "react";
+import ReactDOM from "react-dom";
+import "./index.css";
 
-window.cppgraphql.startService();
+window.graphql.startService();
 
-function fetchQuery (params) {
+let _observableId = 0;
+let _observables = [];
+
+function fetchQuery(params) {
   const query = params.query;
 
   if (query === undefined) {
@@ -20,8 +23,100 @@ function fetchQuery (params) {
   console.log(`Operation: ${operationName}`);
   console.log(`Variables: ${variables}`);
 
-  return window.cppgraphql.fetchQuery(query, operationName, variables)
-    .then(response => JSON.parse(response));
+  const observable = {
+    queryId: null,
+    unsubscribed: false,
+    observableId: _observableId++,
+    observerId: 0,
+    subscriptions: [],
+
+    subscribe: (observer) => {
+      const observerId = observable.observerId++;
+      const subscription = {
+        observer,
+        observerId,
+
+        unsubscribe: () => {
+          observable.subscriptions = observable.subscriptions.filter(
+            (subscription) => subscription.observerId !== observerId
+          );
+          observable.onUnsubscribe();
+        },
+      };
+
+      observable.subscriptions.push(subscription);
+      return subscription;
+    },
+
+    onUnsubscribe: () => {
+      if (observable.subscriptions.length === 0) {
+        observable.unsubscribed = true;
+        _observables = _observables.filter(
+          (observableId) => observable.observableId !== observableId
+        );
+        const queryId = observable.queryId;
+        if (queryId !== null) {
+          window.graphql
+            .unsubscribe(queryId)
+            .then(() => window.graphql.discardQuery(queryId));
+        }
+      }
+    },
+
+    onNext: (response) => {
+      observable.subscriptions.forEach((subscription) => {
+        if (typeof subscription.observer === "function") {
+          subscription.observer(response);
+          subscription.unsubscribe();
+        } else {
+          subscription.observer.next(response);
+        }
+      });
+    },
+
+    onError: (message) => {
+      observable.subscriptions.forEach((subscription) => {
+        if (typeof subscription.observer === "object") {
+          subscription.observer.error(message);
+        }
+      });
+      observable.subscriptions = [];
+      observable.onUnsubscribe();
+    },
+
+    onComplete: () => {
+      observable.subscriptions.forEach((subscription) => {
+        if (typeof subscription.observer === "object") {
+          subscription.observer.complete();
+        }
+      });
+      observable.subscriptions = [];
+      observable.onUnsubscribe();
+    },
+  };
+  _observables[observable.observableId] = observable;
+
+  window.graphql.parseQuery(query).then((queryId) => {
+    if (observable.unsubscribed) {
+      return window.graphql.discardQuery(queryId);
+    }
+
+    observable.queryId = queryId;
+    return window.graphql.fetchQuery(
+      queryId,
+      operationName,
+      variables,
+      (payload) => observable.onNext(payload),
+      () => observable.onComplete()
+    );
+  }).catch((message) => {
+    observable.onError(message);
+  });
+
+  return observable;
 }
 
-ReactDOM.render(<GraphiQL fetcher={fetchQuery} />, document.getElementById('root'));
+ReactDOM.render(
+  <GraphiQL fetcher={fetchQuery} />,
+  document.getElementById("root")
+);

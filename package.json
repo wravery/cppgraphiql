@@ -1,20 +1,10 @@
 {
   "name": "cppgraphiql",
-  "version": "0.1.0",
-  "repository": "github:wravery/cppgraphiql",
+  "version": "0.2.0",
+  "repository": "wravery/cppgraphiql",
   "private": true,
   "main": "./src/startElectron.js",
   "homepage": "./",
-  "dependencies": {
-    "electron-cppgraphql": "github:wravery/electron-cppgraphql",
-    "electron-is-dev": "^1.1.0",
-    "graphiql": "^1.4.7",
-    "graphql": "^14.6.0",
-    "react": "^16.8.6",
-    "react-dom": "^16.8.6",
-    "react-scripts": "^3.4.0",
-    "typescript": "^3.5.3"
-  },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
@@ -30,10 +20,19 @@
     "not ie <= 11",
     "not op_mini all"
   ],
+  "dependencies": {
+    "electron": "~11.5.0",
+    "electron-cppgraphql": "wravery/electron-cppgraphql#017f762963cfa0318ffebf1955c8a6d07394ff00",
+    "electron-is-dev": "^1.2.0",
+    "graphiql": "1.5.16",
+    "graphql": "16.0.0",
+    "react": "^16.8.6",
+    "react-dom": "^16.8.6",
+    "react-scripts": "^4.0.3",
+    "typescript": "^3.5.3"
+  },
   "devDependencies": {
-    "concurrently": "^5.1.0",
-    "electron": "^11.5.0",
-    "minimist": "^1.2.5",
-    "wait-on": "^4.0.1"
+    "concurrently": "~5.3.0",
+    "wait-on": "~5.2.0"
   }
 }
