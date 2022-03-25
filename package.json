@@ -21,7 +21,7 @@
     "not op_mini all"
   ],
   "dependencies": {
-    "electron": "~11.5.0",
+    "electron": "~13.6.6",
     "electron-cppgraphql": "wravery/electron-cppgraphql#017f762963cfa0318ffebf1955c8a6d07394ff00",
     "electron-is-dev": "^1.2.0",
     "graphiql": "1.5.16",
