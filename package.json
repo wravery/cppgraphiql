@@ -22,7 +22,7 @@
   ],
   "dependencies": {
     "electron": "~13.6.6",
-    "electron-cppgraphql": "wravery/electron-cppgraphql#017f762963cfa0318ffebf1955c8a6d07394ff00",
+    "electron-cppgraphql": "wravery/electron-cppgraphql#660df46a6ae5c43bded92d20a809f6c03e715139",
     "electron-is-dev": "^1.2.0",
     "graphiql": "1.5.16",
     "graphql": "16.0.0",
